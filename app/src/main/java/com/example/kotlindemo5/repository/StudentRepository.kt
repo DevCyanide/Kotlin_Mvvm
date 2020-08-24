@@ -1,8 +1,10 @@
 package com.example.kotlindemo5.repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.kotlindemo5.db.dao.StudentDao
-import com.example.kotlindemo5.db.roomDB.RetrofitInstance
+import com.example.kotlindemo5.db.RetrofitInstance
 import com.example.kotlindemo5.model.Students
 import com.example.kotlindemo5.ui.Login.param.SignUp
 import com.google.gson.Gson
@@ -17,49 +19,33 @@ class StudentRepository(private val dao : StudentDao) {
     suspend fun insert(students: Students):Long{
         return dao.insertStudent(students)
     }
+//        fun signIn(student_num:String,password :String){
+//            val signin:Call<Students>? = RetrofitInstance.apiService.signIn(Students)
+//        }
 
-    suspend fun login(student_num:String,password:String): List<Students> {
-//        var okHttpClient:OkHttpClient
-//        okHttpClient = OkHttpClient().newBuilder()
-//            .addInterceptor(HttpIntercept())
-//            .connectTimeout(5, TimeUnit.MINUTES)
-//            .readTimeout(5, TimeUnit.MINUTES)
-//            .writeTimeout(5, TimeUnit.MINUTES)
-//            .build()
-//        val gson = GsonBuilder()
-//            .setLenient()
-//            .create()
-//        val retrofit = Retrofit.Builder().baseUrl(BASE_URL)
-//            .client(okHttpClient).addConverterFactory(ScalarsConverterFactory.create())
-//            .addConverterFactory(GsonConverterFactory.create(gson))
-//            .build();
-//        val service = retrofit.create(ApiServices::class.java)
-//        service.signIn(SignUp(student_num,password)).enqueue(object : Callback<String>{
-//            override fun onFailure(call: Call<String>, t: Throwable) {
-//                Log.d("MYTAG-Error","Response : ${t.localizedMessage.toString()}")
-//            }
-//            override fun onResponse(call: Call<String>, response: Response<String>) {
-//            Log.d("MYTAG","Response : ${Gson().toJson(response.code())}")
-//            }
-//
-//        })
+        fun login(student_num:String,password:String): LiveData<String> {
+        val loginResponse = MutableLiveData<String>()
+
         val call: Call<String>? = RetrofitInstance.apiService?.signIn(SignUp( student_num,password))
         call?.enqueue(object : Callback<String>{
             override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.d("MYTAG-Error","Response : ${t.localizedMessage.toString()}")
+                loginResponse.value = t.message
             }
-
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                Log.d("MYTAG","Response : ${Gson().toJson(response.code())}")
+                    Log.d("MYTAG", "Response : ${Gson().toJson(response.code())}")
+                    if (response.code() == 200) {
+                        loginResponse.value = "Successfull Login"
+                    } else if(response.code()>=404) {
+                        loginResponse.value = "Invalid Username/Password"
+                    }
+                    else{
+                      loginResponse.value= response.errorBody().toString()
+                    }
             }
-
         })
-
-
-        return dao.login(student_num,password)
+//        dao.login(student_num,password)
+        return loginResponse
     }
-
-
-
 
 }

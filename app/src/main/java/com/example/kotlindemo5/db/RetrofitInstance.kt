@@ -1,7 +1,5 @@
-package com.example.kotlindemo5.db.roomDB
+package com.example.kotlindemo5.db
 
-import com.example.kotlindemo5.db.ApiServices
-import com.example.kotlindemo5.db.HttpIntercept
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -10,17 +8,9 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitInstance {
-//    private val mode: Mode = Mode.test
+
     private const val BaseURl = "http://192.168.100.3/kotlindemo/public/api/"
     private const val LIVE_HOST_NAME = ""
-//    private fun getHostName(mode: Mode): String? {
-//        var url: String? = null
-//        when (mode) {
-//            Mode.test ->url = TEST_HOST_NAME
-//            Mode.live->url = TEST_HOST_NAME
-//        }
-//        return url
-//    }
 
     private var retrofit: Retrofit? = null
     private var okHttpClient: OkHttpClient? = null

@@ -8,12 +8,12 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.kotlindemo5.R
 import com.example.kotlindemo5.databinding.ActivityLoginBinding
 import com.example.kotlindemo5.db.roomDB.RomDatabase
-import com.example.kotlindemo5.model.Students
 import com.example.kotlindemo5.repository.StudentRepository
 import com.example.kotlindemo5.ui.Register.RegisterActivity
 import com.example.kotlindemo5.viewmodelfactory.LoginViewModelFactory
@@ -21,6 +21,7 @@ import com.example.kotlindemo5.viewmodelfactory.LoginViewModelFactory
 class LoginActivity : AppCompatActivity(), View.OnClickListener,LoginNavigation {
 
     private lateinit var binding :ActivityLoginBinding
+
      lateinit var stud_num:String
      lateinit var password:String
     lateinit var viewModel: LoginViewModel
@@ -28,12 +29,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener,LoginNavigation 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         context = this@LoginActivity
         val dao = RomDatabase.getInstance(application).studentsDao
         val repository = StudentRepository(dao)
         val factory = LoginViewModelFactory(repository)
         viewModel  = ViewModelProvider(this,factory).get(LoginViewModel::class.java)
+        viewModel.presenter = this
         binding.btnlogin.setOnClickListener(this)
         binding.btntoregister.setOnClickListener(this)
         displayLoggedIn()
@@ -56,7 +59,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener,LoginNavigation 
                 stud_num = binding.studentNum.text.toString().trim()
                 password = binding.password.text.toString().trim()
                 viewModel.login(stud_num,password)
-
             }
             R.id.btntoregister->{
                 intent = Intent(this, RegisterActivity::class.java)
@@ -65,8 +67,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener,LoginNavigation 
         }
     }
 
-    override fun loginSuccessfully() {
-        Toaster(context,"Login Successfully")
+    override fun loginSuccessfully(loginResponse: LiveData<String>) {
+        loginResponse.observe(this, Observer {
+            toast(it)
+        })
+
     }
 
 

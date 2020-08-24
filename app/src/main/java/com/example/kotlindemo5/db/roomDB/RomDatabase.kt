@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.kotlindemo5.db.dao.StudentDao
 import com.example.kotlindemo5.model.Students
 
-@Database(entities = [Students::class],version = 1)
+@Database(entities = [Students::class],version = 3)
 abstract class RomDatabase : RoomDatabase() {
 
     abstract val studentsDao : StudentDao
@@ -22,7 +22,7 @@ abstract class RomDatabase : RoomDatabase() {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         RomDatabase::class.java,
-                        "subscriber_data_database"
+                        "student_data_database"
                     ).build()
                 }
                 return instance
