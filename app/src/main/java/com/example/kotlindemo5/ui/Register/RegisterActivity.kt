@@ -35,7 +35,6 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         val dao = RomDatabase.getInstance(application).studentsDao
         val repository = StudentRepository(dao)
         val factory = StudentViewModelFactory(repository)
-
         registerViewModel = ViewModelProvider(this,factory).get(RegisterViewModel::class.java)
         binding.btnregister.setOnClickListener(this)
         binding.btntologin.setOnClickListener(this)

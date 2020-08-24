@@ -15,11 +15,11 @@ class LoginViewModel(val repository: StudentRepository) : ViewModel() {
     var isLogin : MutableLiveData<List<Students>> = MutableLiveData()
 
     fun login(student_num : String,password : String){
-       lateinit var presenter : LoginNavigation
+     var presenter : LoginNavigation? =null
         viewModelScope.launch {
             //Api in Login
             isLogin.value= repository.login(student_num,password)
-            presenter.loginSuccessfully()
+            presenter?.loginSuccessfully()
         }
     }
 }
