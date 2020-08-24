@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            ></LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:gravity="center">
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="Register"
+                android:textSize="50dp"
+                android:gravity="center">
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Student #"
+                android:padding="15dp"
+                android:background="@drawable/login_edittext"
+                android:layout_marginBottom="15dp"
+                android:id="@+id/stud_num"></EditText>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="First name"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/login_edittext"
+                android:padding="15dp"
+                android:id="@+id/firstname"></EditText>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Last name"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/login_edittext"
+                android:padding="15dp"
+                android:id="@+id/lastname"></EditText>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/login_edittext"
+                android:padding="15dp"
+                android:id="@+id/password"></EditText>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="7dp"
+                android:textAllCaps="false"
+                android:text="Register"
+                android:background="@drawable/register_button"
+                android:textColor="@color/bluecolor"
+                android:id="@+id/btnregister"></Button>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:text="Already got an account?"
+                android:id="@+id/btntologin"
+                ></TextView>
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+    </LinearLayout>
+</layout>
