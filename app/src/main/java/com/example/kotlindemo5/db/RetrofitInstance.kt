@@ -38,9 +38,8 @@ object RetrofitInstance {
             }
             return retrofit
         }
-
     val apiService: ApiServices?
-        get() = retrofitInstance?.create<ApiServices>(ApiServices::class.java)
+        get() = retrofitInstance?.create(ApiServices::class.java)
 
     enum class Mode {
         test, live

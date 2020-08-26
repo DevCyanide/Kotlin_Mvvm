@@ -15,6 +15,7 @@ import com.example.kotlindemo5.R
 import com.example.kotlindemo5.databinding.ActivityLoginBinding
 import com.example.kotlindemo5.db.roomDB.RomDatabase
 import com.example.kotlindemo5.repository.StudentRepository
+import com.example.kotlindemo5.ui.Home.HomeActivity
 import com.example.kotlindemo5.ui.Register.RegisterActivity
 import com.example.kotlindemo5.viewmodelfactory.LoginViewModelFactory
 
@@ -71,6 +72,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener,LoginNavigation 
         loginResponse.observe(this, Observer {
             toast(it)
         })
+        intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
 
     }
 

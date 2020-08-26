@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.kotlindemo5.R
@@ -17,7 +18,7 @@ import com.example.kotlindemo5.repository.StudentRepository
 import com.example.kotlindemo5.ui.Login.LoginActivity
 import com.example.kotlindemo5.viewmodelfactory.StudentViewModelFactory
 
-class RegisterActivity : AppCompatActivity(), View.OnClickListener {
+class RegisterActivity : AppCompatActivity(), View.OnClickListener ,RegisterNavigation{
 
     private lateinit var binding: ActivityMainBinding
     lateinit var context: Context;
@@ -36,6 +37,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         val repository = StudentRepository(dao)
         val factory = StudentViewModelFactory(repository)
         registerViewModel = ViewModelProvider(this,factory).get(RegisterViewModel::class.java)
+        registerViewModel.presenter=this
         binding.btnregister.setOnClickListener(this)
         binding.btntologin.setOnClickListener(this)
         displayData()
@@ -52,6 +54,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
             Log.i("MYTAG-AllStudent",it.toString())
         })
     }
+
 
     override fun onClick(v: View?) {
         when(v?.id){
@@ -72,5 +75,11 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
         }
+    }
+
+    override fun onSuccessRegister(registerResponse: LiveData<String>) {
+       registerResponse.observe(this, Observer {
+        toast(it)
+       })
     }
 }
